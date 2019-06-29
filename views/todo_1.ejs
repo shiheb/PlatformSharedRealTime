@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Liste des tâches en temps réel</title>
+         
+     <body>
+                <h1>Liste de tâches en temps réel</h1>
+ 
+                <ul id="todolist"></ul>
+ 
+                <form action="/" method="post" id="todolistForm">
+                    <label for="tache">Quelle nouvelle tâche ?</label>
+                    <input type="text" name="tache" id="tache" autofocus>
+                    <button type="submit" class="btn btn-primary btn-lg" id="envoiTache">Envoyer</button>
+                </form>
+ 
+         
+        <script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script >
+         
+            // Connection à socket.io
+            var socket = io.connect('http://localhost:8080');
+ 
+            // Première connection, affichage des tâches
+            socket.on('majTache', function(todolist) {
+                $('#todolist').empty(); // Refresh the list
+                todolist.forEach(function(task, index) {
+                    insererTache(tache, index);
+                });
+            });
+ 
+            // A l'envoi du formulaire, la tâche est transmise est affichée sur la page
+            $('#todolistForm').submit(function (){
+                var tache = $('#tache').val();
+                socket.emit('ajoutTache', tache);
+                console.log(tache);
+                insererTache(tache, index); 
+                $('#tache').val('').focus();
+                return false;
+            });
+ 
+            // A l'arrivée du message, insertion dans la page
+            socket.on('ajoutTache', function(data) {
+                insererTache(data.tache, data.index);
+            });
+ 
+            //Fonction insertion tâche
+            function insererTache(tache, index){
+                $('#todolist').append('<li><a class="delete" href="#" data-index="' + index + '">✘</a> ' + tache  + '</li>');
+            }
+ 
+            // Supprimer une tâche
+            $('body').on('click', '.delete', function(){
+                socket.emit('suppTache', $(this).data('index'));
+            });
+ 
+        </script>
+    </body>
+</html>

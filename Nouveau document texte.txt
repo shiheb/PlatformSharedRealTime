@@ -1,0 +1,21 @@
+
+
+Nous avons vu ensemble dans ce cours sur Node.js comment réaliser une Todolist et comment échanger des messages en temps réel... mais nous n'avons jamais fait les deux en même temps !
+
+Je vous propose donc... (roulement de tambour)... de réaliser une Todolist partagée en temps réel !
+Votre mission
+
+Vous allez reprendre le projet de Todolist que nous avions créée, et vous allez l'améliorer pour faire en sorte qu'elle puisse être utilisée par plusieurs personnes en même temps à l'aide de socket.io. Voici les fonctionnalités attendues :
+
+    Quand un client se connecte, il récupère la dernière Todolist connue du serveur
+    Quand un client ajoute une tâche, celle-ci est immédiatement répercutée chez les autres clients
+    Quand un client supprime une tâche, celle-ci est immédiatement supprimée chez les autres clients
+
+Le serveur pourra retenir la Todolist sous le forme d'un simple array qu'il gardera en mémoire. La persistence n'est pas demandée (inutile d'utiliser MySQL ou Mongodb ;o).
+
+L'utilisation d'Express.js est recommandée mais n'est pas obligatoire.
+Fichiers à envoyer
+
+Vous devez renvoyer un fichier .zip contenant vos fichiers source (.js notamment) et un beau fichier package.json.
+
+Attention : n'envoyez pas le dossier node_modules. Ce sera à la personne qui vous corrigera de les récupérer avec un simple npm install. C'est comme ça que l'on distribue des projets Node.js. ;o)
